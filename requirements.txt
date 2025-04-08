@@ -8,3 +8,4 @@ python-dotenv==1.1.0
 Werkzeug==2.0.3
 Flask-Mail
 pymongo  
+forms
