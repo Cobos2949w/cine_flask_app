@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6 col-lg-4">
+        <div class="card shadow" style="background-color: #2c2c2c; color: #e0e0e0; border: 1px solid #424242;">
+            <div class="card-body">
+                <h2 class="card-title text-center mb-4" style="color: #bb86fc;">Iniciar sesión</h2>
+                <form action="{{ url_for('login') }}" method="POST">
+                    <div class="mb-3">
+                        <label for="username" class="form-label" style="color: #e0e0e0;">Nombre de usuario:</label>
+                        <input type="text" id="username" name="username" class="form-control" style="background-color: #333; color: #e0e0e0; border: 1px solid #424242;" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label" style="color: #e0e0e0;">Contraseña:</label>
+                        <input type="password" id="password" name="password" class="form-control" style="background-color: #333; color: #e0e0e0; border: 1px solid #424242;" required>
+                    </div>
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary" style="background-color: #3f51b5; border: none;">Iniciar sesión</button>
+                    </div>
+                </form>
+                <div class="text-center mt-3">
+                    <p class="mb-0" style="color: #e0e0e0;">¿No tienes una cuenta? <a href="{{ url_for('registro') }}" style="color: #bb86fc;">Regístrate aquí</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

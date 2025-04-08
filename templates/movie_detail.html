@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>{{ movie.title }}</h1>
+    <img src="{{ movie.image_url }}" alt="{{ movie.title }}">
+    <p>{{ movie.synopsis }}</p>
+
+    {% set video_path = 'videos/' + movie.title + '.mp4' %}
+    {% if url_for('static', filename=video_path) %}
+        <video controls>
+            <source src="{{ url_for('static', filename=video_path) }}" type="video/mp4">
+            Tu navegador no soporta el elemento de video.
+        </video>
+    {% else %}
+        <p>Video no disponible.</p>
+    {% endif %}
+{% endblock %}

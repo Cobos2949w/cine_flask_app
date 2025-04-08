@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1 style="color: #e0e0e0;">Añadir Película</h1>
+    <form method="POST" action="{{ url_for('add_movie') }}" enctype="multipart/form-data">
+        {{ form.hidden_tag() }}
+        <div class="form-group mb-3">
+            {{ form.titulo.label(class="form-label", style="color: #e0e0e0;") }}
+            {{ form.titulo(class="form-control", style="background-color: #333; color: #e0e0e0; border: 1px solid #424242;") }}
+            {% for error in form.titulo.errors %}
+                <span style="color: #f44336;">[{{ error }}]</span>
+            {% endfor %}
+        </div>
+        <div class="form-group mb-3">
+            {{ form.genero.label(class="form-label", style="color: #e0e0e0;") }}
+            {{ form.genero(class="form-control", style="background-color: #333; color: #e0e0e0; border: 1px solid #424242;") }}
+            {% for error in form.genero.errors %}
+                <span style="color: #f44336;">[{{ error }}]</span>
+            {% endfor %}
+        </div>
+        <div class="form-group mb-3">
+            {{ form.sinopsis.label(class="form-label", style="color: #e0e0e0;") }}
+            {{ form.sinopsis(class="form-control", style="background-color: #333; color: #e0e0e0; border: 1px solid #424242;") }}
+            {% for error in form.sinopsis.errors %}
+                <span style="color: #f44336;">[{{ error }}]</span>
+            {% endfor %}
+        </div>
+        <div class="form-group mb-3">
+            {{ form.fecha.label(class="form-label", style="color: #e0e0e0;") }}
+            {{ form.fecha(class="form-control", style="background-color: #333; color: #e0e0e0; border: 1px solid #424242;") }}
+            {% for error in form.fecha.errors %}
+                <span style="color: #f44336;">[{{ error }}]</span>
+            {% endfor %}
+        </div>
+        <div class="form-group mb-3">
+            {{ form.imagen.label(class="form-label", style="color: #e0e0e0;") }}
+            {{ form.imagen(class="form-control-file", style="background-color: #333; color: #e0e0e0; border: 1px solid #424242;") }}
+            {% for error in form.imagen.errors %}
+                <span style="color: #f44336;">[{{ error }}]</span>
+            {% endfor %}
+        </div>
+        <div class="form-group mb-3">
+            {{ form.estado.label(class="form-label", style="color: #e0e0e0;") }}
+            {{ form.estado(class="form-control", style="background-color: #333; color: #e0e0e0; border: 1px solid #424242;") }}
+            {% for error in form.estado.errors %}
+                <span style="color: #f44336;">[{{ error }}]</span>
+            {% endfor %}
+        </div>
+        <div class="form-group mb-3">
+            {{ form.trailer_url.label(class="form-label", style="color: #e0e0e0;") }}
+            {{ form.trailer_url(class="form-control", style="background-color: #333; color: #e0e0e0; border: 1px solid #424242;") }}
+            {% for error in form.trailer_url.errors %}
+                <span style="color: #f44336;">[{{ error }}]</span>
+            {% endfor %}
+        </div>
+        <div class="form-group">
+            {{ form.submit(class="btn btn-primary", style="background-color: #3f51b5; border: none; color: #e0e0e0;") }}
+        </div>
+    </form>
+{% endblock %}

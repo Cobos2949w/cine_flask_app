@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+
+{% block head %}
+    {{ super() }}
+    <style>
+        body {
+            background-color: #181818;
+            color: #e0e0e0;
+        }
+        .btn-outline-primary {
+            color: #bb86fc;
+            border-color: #bb86fc;
+        }
+        .btn-outline-primary:hover {
+            background-color: #bb86fc;
+            color: #212121;
+        }
+        .card {
+            background-color: #2c2c2c;
+            color: #e0e0e0;
+            border: 1px solid #424242;
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        }
+        .card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.6);
+        }
+        .card-title {
+            color: #bb86fc;
+        }
+        .btn-link {
+            color: #bb86fc;
+        }
+        .btn-link:hover {
+            color: #8a56ac;
+            text-decoration: none;
+        }
+        .form-control {
+            background-color: #2c2c2c;
+            color: #e0e0e0;
+            border: 1px solid #424242;
+        }
+        .form-control::placeholder {
+            color: #757575;
+        }
+        h2 {
+            color: #bb86fc;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-3 bg-dark p-4">
+                <h4 class="text-white mb-3">Filtros y Búsqueda</h4>
+                <form method="GET" action="{{ url_for('index') }}" class="mb-3">
+                    <div class="input-group mb-2">
+                        <input type="date" name="fecha" class="form-control" placeholder="Buscar por fecha">
+                        <button type="submit" class="btn btn-outline-primary">Filtrar</button>
+                    </div>
+                </form>
+                <form method="GET" action="{{ url_for('index') }}" class="mb-3">
+                    <div class="input-group mb-2">
+                        <input type="text" name="busqueda" class="form-control" placeholder="Buscar películas...">
+                        <button type="submit" class="btn btn-outline-primary">Buscar</button>
+                    </div>
+                </form>
+                <form method="GET" action="{{ url_for('index') }}" class="mb-3">
+                    <div class="input-group mb-2">
+                        <input type="text" name="genero" class="form-control" placeholder="Buscar por género...">
+                        <button type="submit" class="btn btn-outline-primary">Filtrar</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="col-md-9 p-4">
+                <h2 class="mb-4">Cartelera de Películas</h2>
+                <div class="row">
+                    {% for pelicula in peliculas %}
+                    <div class="col-md-4 mb-4">
+                        <div class="card h-100">
+                            {% if pelicula['imagen'] %}
+                                <img src="{{ url_for('static', filename=pelicula['imagen']) }}" class="card-img-top" alt="{{ pelicula['titulo'] }}">
+                            {% else %}
+                                <img src="{{ url_for('static', filename='placeholder.png') }}" class="card-img-top" alt="Sin imagen">
+                            {% endif %}
+                            <div class="card-body">
+                                <h5 class="card-title">{{ pelicula['titulo'] }}</h5>
+                                <p class="card-text">
+                                    {{ pelicula['sinopsis'][:100] }}...
+                                    <a href="{{ url_for('pelicula_detalles', id=pelicula['_id']) }}" class="btn btn-link">Ver Más</a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    {% else %}
+                        <div class="col-12">
+                            <p class="text-muted">No se encontraron películas.</p>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

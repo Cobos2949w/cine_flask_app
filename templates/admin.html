@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Panel de Administración</h2>
+    <p><a href="{{ url_for('add_movie') }}" class="btn btn-success mb-3" style="background-color: #4caf50; border: none; color: #e0e0e0;">Añadir Nueva Película</a></p>
+    {% if peliculas %}
+    <div class="table-responsive">
+        <table class="table table-striped table-bordered" style="color: #e0e0e0; width: 100%; table-layout: fixed;">
+            <colgroup>
+                <col style="width: 5%;">
+                <col style="width: 18%;">
+                <col style="width: 15%;">
+                <col style="width: 22%;">
+                <col style="width: 10%;">
+                <col style="width: 8%;">
+                <col style="width: 10%;">
+                <col style="width: 12%;">
+                <col style="width: auto;">
+            </colgroup>
+            <thead class="thead-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Título</th>
+                    <th>Género</th>
+                    <th>Sinopsis</th>
+                    <th>Imagen</th>
+                    <th>Estado</th>
+                    <th>Fecha</th>
+                    <th>Trailer URL</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for pelicula in peliculas %}
+                <tr style="background-color: #2c2c2c; border-bottom: 1px solid #424242;">
+                    <td style="overflow-wrap: break-word;">{{ pelicula['_id'] }}</td>
+                    <td style="overflow-wrap: break-word;">{{ pelicula['titulo'] }}</td>
+                    <td style="overflow-wrap: break-word;">{{ pelicula['genero'] }}</td>
+                    <td style="color: #9e9e9e; overflow-wrap: break-word;">{{ pelicula['sinopsis'] | truncate(150) }}</td>
+                    <td style="overflow-wrap: break-word; text-align: center;">
+                        {% if pelicula['imagen'] %}
+                            <img src="{{ url_for('static', filename=pelicula['imagen'].lstrip('/')) }}" class="admin-table-image card-img-top" alt="{{ pelicula['titulo'] }}">
+                        {% else %}
+                            Sin imagen
+                        {% endif %}
+                    </td>
+                    <td style="overflow-wrap: break-word;">{{ pelicula['estado'] }}</td>
+                    <td style="overflow-wrap: break-word;">{{ pelicula['fecha'] }}</td>
+                    <td style="overflow-wrap: break-word; text-align: center;">
+                        {% if pelicula['trailer_url'] %}
+                            <a href="{{ pelicula['trailer_url'] }}" target="_blank" style="color: #bb86fc; display: block; overflow-wrap: break-word;">Ver Trailer</a>
+                        {% else %}
+                            Sin trailer
+                        {% endif %}
+                    </td>
+                    <td style="overflow-wrap: break-word; white-space: nowrap; text-align: center;">
+                        <a href="{{ url_for('edit_movie', id=pelicula['_id']) }}" class="btn btn-sm btn-primary" style="background-color: #3f51b5; border: none; color: #e0e0e0;">Editar</a>
+                        <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="{{ pelicula['_id'] }}" style="background-color: #d32f2f; border: none; color: #e0e0e0;">Eliminar</button>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <p style="color: #e0e0e0;">No hay películas registradas.</p>
+    {% endif %}
+</div>
+
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content" style="background-color: #2c2c2c; color: #e0e0e0; border: 1px solid #424242;">
+            <div class="modal-header" style="border-bottom: 1px solid #424242;">
+                <h5 class="modal-title" id="deleteModalLabel" style="color: #bb86fc;">Confirmar Eliminación</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="color: #e0e0e0;"></button>
+            </div>
+            <div class="modal-body">
+                ¿Estás seguro de que deseas eliminar la película "<span id="pelicula-a-eliminar" style="font-weight: bold;"></span>"?
+            </div>
+            <div class="modal-footer" style="border-top: 1px solid #424242;">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="background-color: #6c757d; border: none; color: #e0e0e0;">Cancelar</button>
+                <a href="#" id="confirmar-eliminar-btn" class="btn btn-danger" style="background-color: #d32f2f; border: none; color: #e0e0e0;">Eliminar</a>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    .admin-table-image {
+        max-width: 80px;
+        height: auto;
+        border-radius: 4px;
+    }
+</style>
+<script>
+    const deleteModal = document.getElementById('deleteModal');
+    if (deleteModal) {
+        deleteModal.addEventListener('show.bs.modal', event => {
+            const button = event.relatedTarget;
+            const id = button.getAttribute('data-id');
+            const peliculaAEliminarSpan = deleteModal.querySelector('#pelicula-a-eliminar');
+            const confirmarEliminarBtn = deleteModal.querySelector('#confirmar-eliminar-btn');
+
+            peliculaAEliminarSpan.textContent = id;
+            confirmarEliminarBtn.href = `{{ url_for('delete_movie', id=0) }}`.replace('/0', `/${id}`);
+        });
+    }
+</script>
+{% endblock %}

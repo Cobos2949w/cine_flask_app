@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}Panel de Administración{% endblock %}
+
+{% block content %}
+    <h1>Panel de Administración</h1>
+    <p>Bienvenido al panel de administración.</p>
+    {% if peliculas %}
+        <h2>Películas en la base de datos:</h2>
+        <ul>
+            {% for pelicula in peliculas %}
+                <li>{{ pelicula.titulo }} ({{ pelicula.genero }}, {{ pelicula.estado }})</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No hay películas en la base de datos.</p>
+    {% endif %}
+{% endblock %}
