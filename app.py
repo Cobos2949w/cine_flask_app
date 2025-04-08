@@ -23,7 +23,7 @@ sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8')
 
 # Importaciones de módulos locales
-from movie_forms import MovieForm
+from forms import MovieForm
 from utils.log_handler import log_error
 from error_handler import recibir_correos_error  # Importar la función
 
