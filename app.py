@@ -4,6 +4,7 @@ import sys
 import io
 from smtplib import SMTP_SSL
 from unittest import result
+from pyodbc import connect
 
 from dotenv import load_dotenv
 from flask import Flask, current_app, render_template, request, redirect, url_for, flash, session
